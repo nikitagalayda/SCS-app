@@ -2,6 +2,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import AddIcon from "@mui/icons-material/Add";
 
 import React, { useEffect, useState } from "react";
 import Web3 from "web3";
@@ -16,7 +17,7 @@ import {
   // contractInitialized,
 } from "../Web3Client";
 import NewCompanyInput from "./NewCompanyInput";
-import { Grid } from "@mui/material";
+import { Grid, IconButton } from "@mui/material";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -47,6 +48,7 @@ export default function NewCompanyInterface() {
 
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const [open, setOpen] = React.useState(false);
+  const [numFounders, setNumFounders] = useState(1);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -81,20 +83,49 @@ export default function NewCompanyInterface() {
   };
 
   return (
-    <Box sx={{ justifyContent: "center" }}>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Added a new company
-        </Alert>
-      </Snackbar>
-      <Grid container direction="column" alignItems="center" spacing={2}>
-        <Grid item>
+    <Grid
+      width="100%"
+      container
+      direction="row"
+      justifyContent="center"
+      columnSpacing={2}
+      // alignItems="center"
+    >
+      <Grid item marginTop={10}>
+        <IconButton
+          onClick={() => setNumFounders(Math.max(1, numFounders + 1))}
+        >
+          <AddIcon />
+        </IconButton>
+      </Grid>
+
+      <Grid
+        width="65%"
+        item
+        // height="100%"
+        container
+        direction="column"
+        // justifyContent="flex-start"
+        alignItems="center"
+      >
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Added a new company
+          </Alert>
+        </Snackbar>
+        <Grid item width="100%">
           <NewCompanyInput
+            numFounders={numFounders}
+            setNumFounders={setNumFounders}
             newCompanyInfo={newCompanyInfo}
             setNewCompanyInfo={setNewCompanyInfo}
           ></NewCompanyInput>
         </Grid>
-        <Grid item>
+        <Grid item marginTop={2}>
           <Button
             variant="contained"
             onClick={() => {
@@ -109,6 +140,6 @@ export default function NewCompanyInterface() {
           </Button>
         </Grid>
       </Grid>
-    </Box>
+    </Grid>
   );
 }

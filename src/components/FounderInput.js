@@ -18,8 +18,9 @@ export default function FounderInput({ id, addNewFounder, removeFounder }) {
       justifyContent="flex-start"
       alignItems="center"
     >
-      <Grid item>
+      <Grid item flex={1}>
         <TextField
+          fullWidth
           id="outlined-basic"
           label="Founder"
           variant="outlined"
@@ -27,7 +28,7 @@ export default function FounderInput({ id, addNewFounder, removeFounder }) {
           onChange={changeHandler}
         />
       </Grid>
-      <Grid>
+      <Grid item>
         <IconButton variant="contained" onClick={() => removeFounder(id)}>
           <DeleteIcon />
         </IconButton>

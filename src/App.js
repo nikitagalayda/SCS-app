@@ -44,8 +44,9 @@ function App() {
   return (
     <div className="App">
       {/* <Grid container direction="column" alignContent="center"> */}
-      <Box width="100vw" height="100vh" marginTop="10%">
+      <Box width="100vw" height="70vh" marginTop="10%">
         <Grid
+          height="100%"
           container
           direction="row"
           // justifyContent="center"
@@ -54,15 +55,16 @@ function App() {
           <Grid
             item
             width="33%"
+            // height="100%"
             container
             direction="column"
-            justifyContent="center"
+            justifyContent="flex-start"
             alignItems="center"
           >
-            <Grid item>
+            <Grid item flex={1}>
               <h1>GET COMPANIES</h1>
             </Grid>
-            <Grid item>
+            <Grid item flex={9}>
               <Button variant="contained" onClick={() => retrieve()}>
                 {" "}
                 GET COMPANIES{" "}
@@ -77,13 +79,23 @@ function App() {
             )}
             {/* </Box> */}
           </Grid>
-          <Grid item width="33%">
-            <Grid container direction="column" alignItems="center">
+          <Grid
+            item
+            width="33%"
+            height="100%"
+            container
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="center"
+            // border={1}
+          >
+            <Grid item>
               <h1>ADD A COMPANY</h1>
+            </Grid>
+            <Grid item width="100%">
               <NewCompanyInterface></NewCompanyInterface>
             </Grid>
           </Grid>
-
           <Grid item width="33%">
             <Grid container direction="column" alignItems="center">
               <h1>INTERACT</h1>
