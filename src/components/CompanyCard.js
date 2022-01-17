@@ -5,11 +5,13 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
+import Link from "@mui/material/Link";
 
 import { retrieveCompanyShares } from "../Web3Client";
 
 export default function CompanyCard({ companyInfo }) {
   const [shares, setShares] = useState(0);
+  const openSeaLink = `http://testnets.opensea.io/${companyInfo[3]}`;
 
   const retrieveShares = () => {
     retrieveCompanyShares(companyInfo[3])
@@ -61,6 +63,9 @@ export default function CompanyCard({ companyInfo }) {
             {companyInfo[3]}
           </Typography>
         </Typography>
+        <Link rel="noopener noreferrer" target="_blank" href={openSeaLink}>
+          OpenSea
+        </Link>
       </CardContent>
     </Card>
   );
