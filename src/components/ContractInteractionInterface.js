@@ -183,7 +183,7 @@ export default function ContractInteractionInterface() {
               <Grid
                 container
                 direction="row"
-                columnSpacing={1}
+                spacing={1}
                 // justifyContent="center"
                 // alignItems="center"
               >
@@ -208,7 +208,7 @@ export default function ContractInteractionInterface() {
               </Grid>
             </Grid>
             <Grid item width="40%">
-              <Grid container direction="row" columnSpacing={1}>
+              <Grid container direction="row" spacing={1}>
                 <Grid item flex={1}>
                   <Button
                     style={{ width: "100%", height: "100%" }}

@@ -44,7 +44,7 @@ function App() {
   return (
     <div className="App">
       {/* <Grid container direction="column" alignContent="center"> */}
-      <Box width="100%" height="100%" marginTop="10%">
+      <Box width="100vw" height="100vh" marginTop="10%">
         <Grid container direction="row">
           <Grid width="30%" container direction="column" alignItems="center">
             <h1>GET COMPANIES</h1>
