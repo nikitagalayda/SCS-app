@@ -142,8 +142,9 @@ export default function ContractInteractionInterface() {
           /> */}
       {/* </Grid> */}
       {/* <h2>Contract address</h2> */}
-      <Grid item>
+      <Grid item width="60%">
         <TextField
+          fullWidth
           id="outlined-basic"
           label="Contract address"
           variant="outlined"
@@ -152,8 +153,9 @@ export default function ContractInteractionInterface() {
         />
       </Grid>
       {/* <h2>Number of shares</h2> */}
-      <Grid item>
+      <Grid item width="60%">
         <TextField
+          fullWidth
           id="outlined-basic"
           label="Shares"
           variant="outlined"
@@ -161,10 +163,11 @@ export default function ContractInteractionInterface() {
           onChange={changeHandler}
         />
       </Grid>
-      <Grid item>
+      <Grid item width="60%">
         <TextField
+          fullWidth
           id="outlined-basic"
-          label="Receiver address"
+          label="Receiver address (Only for Send)"
           variant="outlined"
           name="to"
           onChange={changeHandler}
@@ -179,7 +182,7 @@ export default function ContractInteractionInterface() {
             alignItems="center"
             rowSpacing={1}
           >
-            <Grid item width="40%">
+            <Grid item width="60%">
               <Grid
                 container
                 direction="row"
@@ -207,7 +210,7 @@ export default function ContractInteractionInterface() {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item width="40%">
+            <Grid item width="60%">
               <Grid container direction="row" spacing={1}>
                 <Grid item flex={1}>
                   <Button
