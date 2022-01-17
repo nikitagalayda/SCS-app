@@ -48,6 +48,13 @@ module.exports = {
       gasPrice: 10e9,
       skipDryRun: true,
     },
+    polygon: {
+      provider: () =>
+        new HDWalletProvider(mnemonic, `https://polygon-rpc.com/`),
+      network_id: 137,
+      gasPrice: 10e9,
+      skipDryRun: true,
+    },
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
     // You should run a client (like ganache-cli, geth or parity) in a separate terminal
