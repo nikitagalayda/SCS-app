@@ -126,5 +126,19 @@ export const reissueShares = async (contractAddress, newAmount) => {
     .send({ from: selectedAccount });
 };
 
+export const sendShares = async (contractAddress, amount, to) => {
+  if (!contractInitialized) {
+    await init();
+  }
+
+  CompanyContract = new web3.eth.Contract(
+    CompanyContractBuild.abi,
+    contractAddress
+  );
+  return CompanyContract.methods
+    .transferShares(to, amount)
+    .send({ from: selectedAccount });
+};
+
 export { web3, SCSContract };
 // export { SCSContract, contractInitialized };

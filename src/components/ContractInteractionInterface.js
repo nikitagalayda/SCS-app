@@ -7,7 +7,12 @@ import { Box } from "@mui/system";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
-import { mintShares, burnShares, reissueShares } from "../Web3Client";
+import {
+  mintShares,
+  burnShares,
+  reissueShares,
+  sendShares,
+} from "../Web3Client";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -17,6 +22,7 @@ export default function ContractInteractionInterface() {
   const [interactionInfo, setInteractionInfo] = useState({
     contractAddress: "",
     amountShares: 0,
+    to: "",
   });
 
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -91,6 +97,27 @@ export default function ContractInteractionInterface() {
       });
   };
 
+  const send = () => {
+    console.log(interactionInfo);
+    sendShares(
+      interactionInfo.contractAddress,
+      interactionInfo.amountShares,
+      interactionInfo.to
+    )
+      .then((tx) => {
+        setOpen(true);
+        setSnackbarMessage("Transfer successful");
+        setSnackbarSeverity("success");
+        console.log(tx);
+      })
+      .catch((err) => {
+        setOpen(true);
+        setSnackbarMessage("Transfer unsuccessful");
+        setSnackbarSeverity("error");
+        console.log(err);
+      });
+  };
+
   return (
     <Grid
       container
@@ -135,27 +162,73 @@ export default function ContractInteractionInterface() {
         />
       </Grid>
       <Grid item>
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          spacing={2}
-        >
-          <Grid item>
-            <Button variant="contained" onClick={() => mint()}>
-              Mint
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" onClick={() => burn()}>
-              Burn
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" onClick={() => reissue()}>
-              Reissue
-            </Button>
+        <TextField
+          id="outlined-basic"
+          label="Receiver address"
+          variant="outlined"
+          name="to"
+          onChange={changeHandler}
+        />
+      </Grid>
+      <Grid item width="100%">
+        <Grid>
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            rowSpacing={1}
+          >
+            <Grid item width="40%">
+              <Grid
+                container
+                direction="row"
+                columnSpacing={1}
+                // justifyContent="center"
+                // alignItems="center"
+              >
+                <Grid item flex={1}>
+                  <Button
+                    style={{ width: "100%", height: "100%" }}
+                    variant="contained"
+                    onClick={() => mint()}
+                  >
+                    Mint
+                  </Button>
+                </Grid>
+                <Grid item flex={1}>
+                  <Button
+                    style={{ width: "100%", height: "100%" }}
+                    variant="contained"
+                    onClick={() => burn()}
+                  >
+                    Burn
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item width="40%">
+              <Grid container direction="row" columnSpacing={1}>
+                <Grid item flex={1}>
+                  <Button
+                    style={{ width: "100%", height: "100%" }}
+                    variant="contained"
+                    onClick={() => reissue()}
+                  >
+                    Reissue
+                  </Button>
+                </Grid>
+                <Grid item flex={1}>
+                  <Button
+                    style={{ width: "100%", height: "100%" }}
+                    variant="contained"
+                    onClick={() => send()}
+                  >
+                    Send
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

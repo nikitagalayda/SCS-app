@@ -143,7 +143,9 @@ contract CompanyContract is ERC1155, IERC1155Receiver {
     function transferShares(address to, uint256 amount) public onlyFounders {
         require(amount <= num_shares, "Not enough shares");
 
-        safeTransferFrom(address(this), to, CONTRACT, amount, "");
+        _safeTransferFrom(address(this), to, CONTRACT, amount, "");
+
+        num_shares -= amount;
     }
 
     function getNumShares() public view returns (uint256) {
