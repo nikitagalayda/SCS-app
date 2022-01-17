@@ -70,7 +70,7 @@ function App() {
 
           <Grid item width="30%">
             <Grid container direction="column" alignItems="center">
-              <h1>INTERACT WITH A CONTRACT</h1>
+              <h1>INTERACT</h1>
               <ContractInteractionInterface></ContractInteractionInterface>
             </Grid>
           </Grid>
