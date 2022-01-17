@@ -8,9 +8,10 @@ let SCSContract;
 let CompanyContract;
 let contractInitialized = false;
 let web3;
+let provider;
 
 export const init = async () => {
-  let provider = window.ethereum;
+  provider = window.ethereum;
 
   if (typeof provider !== "undefined") {
     // Metamask is installed
@@ -41,6 +42,18 @@ export const init = async () => {
   );
 
   contractInitialized = true;
+};
+
+export const getNewSCSContractInstance = async () => {
+  web3 = new Web3(provider);
+  const networkID = await web3.eth.net.getId();
+
+  SCSContract = new web3.eth.Contract(
+    SCSContractBuild.abi,
+    SCSContractBuild.networks[networkID].address
+  );
+
+  return SCSContract;
 };
 
 export const retrieveCompanies = async () => {
@@ -112,3 +125,6 @@ export const reissueShares = async (contractAddress, newAmount) => {
     .reissueShares(newAmount)
     .send({ from: selectedAccount });
 };
+
+export { web3, SCSContract };
+// export { SCSContract, contractInitialized };

@@ -15,7 +15,15 @@ contract CompanyContract is ERC1155, IERC1155Receiver {
     address constant burn_address = 0x000000000000000000000000000000000000dEaD;
     uint256 test_variable = 0;
 
+    mapping(address => bool) mint_votes;
+    mapping(address => bool) burn_votes;
+    mapping(address => bool) reissue_votes;
+
     uint256 public constant CONTRACT = 1;
+
+    event MintSuccess(address indexed from);
+    event BurnSuccess(address indexed from);
+    event ReissueSuccess(address indexed from);
 
     modifier onlyFounders() {
         require(
@@ -56,21 +64,86 @@ contract CompanyContract is ERC1155, IERC1155Receiver {
     }
 
     function mintShares(uint256 amt) public onlyFounders {
+        mint_votes[msg.sender] = true;
+        // mint_transactions.push(
+        //     Transaction({
+        //         initiator: msg.sender,
+        //         value: amt,
+        //         executed: false,
+        //         num_confirmations: 0
+        //     })
+        // );
+
+        for (uint256 i = 0; i < founders.length; i++) {
+            if (!mint_votes[founders[i]]) {
+                return;
+            }
+        }
+
         _mint(address(this), CONTRACT, amt, "");
 
         num_shares += amt;
+        emit MintSuccess(address(this));
     }
+
+    // function confirmMintShare(uint256 tx_idx)
+    //     public
+    //     onlyFounders
+    //     mintTxExists(tx_idx)
+    //     mintNotExecuted(tx_idx)
+    //     mintNotConfirmed(tx_idx)
+    // {
+    //     Transaction storage transaction = mint_transactions[tx_idx];
+    //     transaction.num_confirmations += 1;
+    //     mint_confirmations[tx_idx][msg.sender] = true;
+    // }
+
+    // function executeMintShare(uint256 tx_idx)
+    //     public
+    //     onlyFounders
+    //     mintTxExists(tx_idx)
+    //     mintNotExecuted(tx_idx)
+    // {
+    //     Transaction storage transaction = mint_transactions[tx_idx];
+
+    //     require(
+    //         transaction.num_confirmations == founders.length,
+    //         "Not enough confirmations"
+    //     );
+
+    //     transaction.executed = true;
+
+    //     _mint(address(this), CONTRACT, transaction.value, "");
+
+    //     num_shares += 1;
+    // }
 
     function burnShares(uint256 amt) public onlyFounders {
         // safeTransferFrom(address(this), burn_address, CONTRACT, amt, "");
+        burn_votes[msg.sender] = true;
+
+        for (uint256 i = 0; i < founders.length; i++) {
+            if (!burn_votes[founders[i]]) {
+                return;
+            }
+        }
         _burn(address(this), CONTRACT, amt);
 
         num_shares -= amt;
+        emit BurnSuccess(address(this));
     }
 
     function reissueShares(uint256 newAmount) public onlyFounders {
         burnShares(num_shares);
         mintShares(newAmount);
+
+        emit ReissueSuccess(address(this));
+    }
+
+    function transferShares(address to, uint256 amount) public onlyFounders {
+        require(amount <= num_shares, "Not enough shares");
+
+        safeTransferFrom(address(this), to, CONTRACT, amount, "");
     }
 
     function getNumShares() public view returns (uint256) {

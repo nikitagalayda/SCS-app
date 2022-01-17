@@ -6,6 +6,8 @@ import "./CompanyContract.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 
 contract SCS is IERC1155Receiver {
+    event CompanyCreated(address indexed from);
+
     struct Company {
         string name;
         address[] founders;
@@ -43,6 +45,8 @@ contract SCS is IERC1155Receiver {
                 contract_address: company_contract_address
             })
         );
+
+        emit CompanyCreated(msg.sender);
     }
 
     function getCompanies() public view returns (Company[] memory) {
