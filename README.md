@@ -1,3 +1,7 @@
+# Run in browser
+
+To use the system in the browser go to https://nikitagalayda.github.io/SCS-app
+
 # Install
 
 in the scs-app directory run:
